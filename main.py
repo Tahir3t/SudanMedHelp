@@ -7,9 +7,8 @@ import time
 from google.oauth2 import service_account
 from gspread_pandas import Spread, Client
 import streamlit as st
-
-import gspread
-from gspread_dataframe import get_as_dataframe
+# import gspread
+# from gspread_dataframe import get_as_dataframe
 
 st.set_page_config(layout='wide', page_title="Khartoum Medical Response", initial_sidebar_state="expanded")
 st.markdown(
@@ -33,20 +32,18 @@ st.write('''
             ''')
 st.write("https://forms.gle/Nm8qT8D3mVq6tX6b7")
 
-# scope = ["https://www.googleapis.com/auth/spreadsheets",
-#          "https://www.googleapis.com/auth/drive"]
+scope = ["https://www.googleapis.com/auth/spreadsheets",
+         "https://www.googleapis.com/auth/drive"]
 
-# credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes = scope)
+credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes = scope)
 
-# client = Client(scope=scope, creds=credentials)
-# spreadsheetname = "Sudan Medical Help (Responses)"
-# spread = Spread(spreadsheetname, client=client)
-# g_sheet = spread.sheet_to_df(sheet="Form Responses 1", index=0)
-# data = g_sheet
-
-gc = gspread.service_account("credentials.json")
-ws_info = gc.open("Sudan Medical Help (Responses)").worksheet("Form Responses 1")
-data = get_as_dataframe(ws_info)
+client = Client(scope=scope, creds=credentials)
+spreadsheetname = "Sudan Medical Help (Responses)"
+spread = Spread(spreadsheetname, client=client)
+data = spread.sheet_to_df(sheet="Form Responses 1", index=0)
+# gc = gspread.service_account("credentials.json")
+# ws_info = gc.open("Sudan Medical Help (Responses)").worksheet("Form Responses 1")
+# data = get_as_dataframe(ws_info)
 data = data.loc[:, ~data.columns.str.contains("^Unnamed")]
 data = data[data['Timestamp'].notna()]
 data = data.fillna("-")
