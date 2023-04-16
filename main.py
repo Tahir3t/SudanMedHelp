@@ -63,7 +63,7 @@ with modification_container:
     for column in to_filter_columns:
         left, right = st.sidebar.columns((1,20))
         left.write("↳")
-        if is_categorical_dtype(df[column]) or df[column].nunique()<=12:
+        if is_categorical_dtype(df[column]) or df[column].nunique()<=20:
             user_cat_input = right.multiselect(
                 f"Values for {column}",
                 df[column].unique(),
