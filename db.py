@@ -5,7 +5,7 @@ import os
 load_dotenv()
 
 class Supabase:
-    """A proxy class with the sole purpose of instantiating the Supabase SDK. Requires a 
+    """A proxy class with the sole purpose of instantiating the Supabase SDK.
     """
     client = None
     supabase_url = None
