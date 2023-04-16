@@ -52,6 +52,7 @@ data['رقم الهاتف'] = data['رقم الهاتف'].str.zfill(10)
 data['مواعيد الاتصال من الساعة'] = data['مواعيد الاتصال من الساعة'].astype(str).apply(lambda x: x.replace('0:0',''))
 df = data.copy()
 
+df = df.sort_values(by=['الاسم'])
 
 seach_filter = ["التخصص", "المدينة", "نوع المساعدة"]
 
@@ -88,7 +89,7 @@ with modification_container:
             if user_text_input:
                 df = df[df[column].str.contains(user_text_input)]
 
-print(data)
+
 
 kht_meds = df[df['المدينة'] == "الخرطوم"]["الاسم"].nunique()
 bahri_meds = df[df['المدينة'] == "بحري"]["الاسم"].nunique()
